@@ -1,0 +1,55 @@
+<div class="card">
+  <h1>Clientes Registrados</h1>
+  <form [formGroup]="customerForm" (ngSubmit)="saveCustomer()">
+    <div>
+      <label for="">Nombre:</label>
+      <input type="text" formControlName="name" />
+      @if(this.customerForm.get('name')?.errors?.['required']){
+      <span style="color: red">El nombre no puede quedar vacío</span>
+      } @if(this.customerForm.get('name')?.errors?.['minlength']){
+      <span style="color: red">Debe contener al menos 5 carácteres</span>
+      }
+    </div>
+    <div>
+      <label for="">Correo:</label>
+      <input type="text" formControlName="email" />
+      @if(this.customerForm.get('email')?.errors?.['required']){
+      <span style="color: red">El email no puede quedar vacío</span>
+      } @if(this.customerForm.get('email')?.errors?.['email']){
+      <span style="color: red">Debe ser un correo válido</span>
+      }
+    </div>
+    <div>
+      <label for="">Edad:</label>
+      <input type="text" formControlName="age" />
+      @if(this.customerForm.get('age')?.errors?.['required']){
+      <span style="color: red">La edad no puede quedar vacío</span>
+      }
+    </div>
+    <div class="submit-btn-container">
+      <input type="submit" value="Guardar" />
+    </div>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Edad</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customerList; let i = index">
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.age }}</td>
+        <td>
+          <button class="delete-btn" (click)="deleteCustomer(customer.id)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
